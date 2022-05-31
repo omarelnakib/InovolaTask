@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Store;
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class StorePolicy
+class CartPolicy
 {
     use HandlesAuthorization;
 
@@ -18,8 +18,6 @@ class StorePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->type == "Merchant";
-
         //
     }
 
@@ -27,14 +25,12 @@ class StorePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Store $store)
+    public function view(User $user, Cart $cart)
     {
         //
-        return $user->id == $store->user_id;
-
     }
 
     /**
@@ -52,38 +48,34 @@ class StorePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Store $store)
+    public function update(User $user, Cart $cart)
     {
         //
-        return $user->id == $store->user_id;
-
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Store $store)
+    public function delete(User $user, Cart $cart)
     {
         //
-        return $user->id == $store->user_id;
-
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Store $store)
+    public function restore(User $user, Cart $cart)
     {
         //
     }
@@ -92,10 +84,10 @@ class StorePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Store $store)
+    public function forceDelete(User $user, Cart $cart)
     {
         //
     }

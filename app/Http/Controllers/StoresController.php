@@ -14,20 +14,17 @@ class StoresController extends Controller
     //retrieve all stores for the authenticated user
     public function index(){
         $user = auth()->user();
-        // dd($user);
-        if($user->type=='Merchant'){
-
-            $stores = Store::where('user_id',1)->get();
+        $this->authorize('viewAny',Store::class);
+        $stores = Store::where('user_id',$user->id)->get();
             return compact('stores');
-        }
-        abort(404, "It's a Consumer Account!");
+        
 
     }
 
     //show certain store
     public function show(Store $store){
         // dd($user);
-        $this->authorize('update', $store);
+        $this->authorize('view', $store);
 
         return compact('store');
     }
@@ -57,7 +54,7 @@ class StoresController extends Controller
             'vat_percent'=>''
         ]);
 
-        auth()->user()->store()->whereId($store->id)->update($data);
+        $store->update($data);
 
         return true;
 

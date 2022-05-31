@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Store;
+use App\Models\Product;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class StorePolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -18,8 +19,6 @@ class StorePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->type == "Merchant";
-
         //
     }
 
@@ -27,14 +26,12 @@ class StorePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Store $store)
+    public function view(User $user, Product $product)
     {
         //
-        return $user->id == $store->user_id;
-
     }
 
     /**
@@ -43,8 +40,10 @@ class StorePolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, $storeId)
     {
+        return $user->type == "Merchant" && in_array($storeId,$user->store()->pluck('id')->toArray());
+
         //
     }
 
@@ -52,38 +51,36 @@ class StorePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Store $store)
+    public function update(User $user, Product $product)
     {
-        //
-        return $user->id == $store->user_id;
+        return in_array($product->store_id,$user->store()->pluck('id')->toArray());
 
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Store $store)
+    public function delete(User $user, Product $product)
     {
         //
-        return $user->id == $store->user_id;
-
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Store $store)
+    public function restore(User $user, Product $product)
     {
         //
     }
@@ -92,10 +89,10 @@ class StorePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Store  $store
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Store $store)
+    public function forceDelete(User $user, Product $product)
     {
         //
     }

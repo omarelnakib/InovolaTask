@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('store_id');
+
             // name and description are json to allow multilingual names and descriptions
             $table->json('name');
             $table->json('description');
             $table->integer('available_quantity');
-            $table->foreignId('store_id')->index();
+            $table->index('store_id');
             $table->boolean('vat_included')->default(false);
             $table->float('price')->default(0);
             $table->timestamps();

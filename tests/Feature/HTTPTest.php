@@ -17,26 +17,18 @@ class HTTPTest extends TestCase
      */
     public function testUpdateStore()
     {
-        // foreach($session as $key=>$value){
-        //     Session::set($key, $value);
-        // }
-        // $user = new User(array('id'=>'1','name' => 'omar')); $this->be($user);
-        $user = new User([
-            'id' => 1,
-            'name' => 'omar'
-        ]);
-        $this->be($user);
-        $response = $this->patch('/store/1',['name' =>'firstShop',
-        'vat_percent' => '25']);
-        // dd($response);
-        $response->assertStatus(200);
+        // $user = new User([
+        //     'id' => 1,
+        //     'name' => 'omar'
+        // ]);
+        // $this->be($user);
+        // $response = $this->patch('/store/1',['name' =>'firstShop',
+        // 'vat_percent' => '25']);
+        // $response->assertStatus(200);
     }
     public function testStore()
     {
-        // foreach($session as $key=>$value){
-        //     Session::set($key, $value);
-        // }
-        // $user = new User(array('id'=>'1','name' => 'omar')); $this->be($user);
+       
         // $user = new User([
         //     'id' => 1,
         //     'name' => 'yish'
@@ -44,7 +36,6 @@ class HTTPTest extends TestCase
         // $this->be($user);
         // $response = $this->post('/store',['name' =>'pets2',
         // 'vat_percent' => '25']);
-        // // dd($response);
         // $response->assertStatus(200);
     }
 }
