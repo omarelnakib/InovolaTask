@@ -17,7 +17,7 @@ use App\Http\Controllers\StoresController;
 Auth::routes();
 
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,7 +25,9 @@ Route::get('/', function () {
 Route::get('/user/{user}', [UserController::class,'index'])->name('user.show');
 
 
-Route::get('/stores', [StoresController::class,'index']);
+Route::get('/store', [StoresController::class,'index']);
 Route::get('/store/{store}', [StoresController::class,'show'])->name('store.show');
+Route::post('/store', [StoresController::class,'store']);
+Route::patch('/store/{store}', [StoresController::class,'update'])->name('store.update');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-});
+// });

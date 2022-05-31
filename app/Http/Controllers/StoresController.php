@@ -9,7 +9,7 @@ class StoresController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
     //retrieve all stores for the authenticated user
     public function index(){
@@ -27,26 +27,40 @@ class StoresController extends Controller
     //show certain store
     public function show(Store $store){
         // dd($user);
+        $this->authorize('update', $store);
+
         return compact('store');
     }
 
     //add store to current user
     public function store(){
 
-        $data = $request->validate([
+        $data = request()->validate([
             'name' => 'required',
-
+            'shipping_cost'=>'',
+            'vat_percent'=>''
         ]);
 
-        auth()->user()->stores()->create([
-            'name' =>$data['name'],
-            'user_id'=>auth()->user()->id,
-            'shipping_cost'=>$data['shipping_cost'],
-            'vat_percent' => $data['vat_percent']
+        auth()->user()->store()->create($data);
 
-        ]);
-
-        return redirect('/home' );
+        return true;
 
     }
+
+    //update store data
+    public function update(Store $store){
+        $this->authorize('update', $store);
+
+        $data = request()->validate([
+            'name' => 'required',
+            'shipping_cost'=>'',
+            'vat_percent'=>''
+        ]);
+
+        auth()->user()->store()->whereId($store->id)->update($data);
+
+        return true;
+
+    }
+    
 }
