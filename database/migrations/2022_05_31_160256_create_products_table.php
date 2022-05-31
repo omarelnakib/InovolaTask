@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('available_quantity');
             $table->foreignId('store_id')->index();
             $table->boolean('vat_included')->default(false);
+            $table->float('price')->default(0);
             $table->timestamps();
         });
     }
