@@ -8,8 +8,9 @@ class UserController extends Controller
 {
 
     public function index($user){
-        $user = User::findOrFail($user);
+        $user = auth()->user();
         return $user;
     }
+    
 
 }

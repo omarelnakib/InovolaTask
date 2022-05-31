@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,13 +14,18 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
+
+Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/user/{user}', [UserController::class,'index'])->name('user.show');
 
-Auth::routes();
 
+Route::get('/stores', [StoresController::class,'index']);
+Route::get('/store/{store}', [StoresController::class,'show'])->name('store.show');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
