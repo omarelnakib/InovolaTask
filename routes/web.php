@@ -29,6 +29,7 @@ Route::get('/user/{user}', [UserController::class,'index'])->name('user.show');
 
 Route::get('/store', [StoresController::class,'index']);
 Route::get('/store/{store}', [StoresController::class,'show'])->name('store.show');
+Route::get('/store/{store}/product', [StoresController::class,'showProducts'])->name('store_product.show');
 Route::post('/store', [StoresController::class,'store']);
 Route::patch('/store/{store}', [StoresController::class,'update'])->name('store.update');
 
@@ -40,7 +41,7 @@ Route::patch('/product/{product}', [ProductsController::class,'update'])->name('
 
 Route::get('/cart', [CartsController::class,'index']);
 Route::post('/cart', [CartsController::class,'store']);
-Route::patch('/cart/{product}', [CartsController::class,'update'])->name('cart.update');
+Route::patch('/cart/{cart}/{product}', [CartsController::class,'update'])->name('cart.update');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

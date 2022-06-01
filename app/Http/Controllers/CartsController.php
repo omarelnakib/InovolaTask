@@ -33,15 +33,14 @@ class CartsController extends Controller
 
         $this->authorize('create',Cart::class);
 
-        // assumed that each user has only one cart and its id equals the user id
-        $data['cart_id']=auth()->user()->id;
-       $cart= Cart::firstOrCreate(['user_id'=>$data['cart_id']]);
-        
+        // assumed that each user has only one cart
+        // $data['cart_id']=auth()->user()->id;
+       $cart= Cart::firstOrCreate(['user_id'=>auth()->user()->id]);
         DB::beginTransaction();
         try {
            //insert into the pivot table
             DB::table('cart_product')->insert([
-                'cart_id' => $data['cart_id'],
+                'cart_id' => $cart['id'],
                 'product_id' => $data['product_id'],
                 'quantity' => $data['quantity']
             ]);
@@ -68,15 +67,36 @@ class CartsController extends Controller
    
 
     //update product quantity data
-    public function update(Product $product){
+    public function update(Cart $cart, Product $product){
 
         $data = request()->validate([
             'quantity'=>'required'
         ]);
 
-        $affected= DB::table('cart_product')->where('cart_id',auth()->user()->id)->where('product_id',$product->id)->update(['quantity'=>$data['quantity']]);
+        DB::beginTransaction();
+        try {
 
+        $affected= DB::table('cart_product')->where('cart_id',$cart->id)->where('product_id',$product->id)->update(['quantity'=>$data['quantity']]);
+        $cartData = auth()->user()->cart()->first()->with('products')->get();
+        $cartArray = $cartData->toArray();
+        $newTotal = 0;
+        foreach($cartArray[0]['products'] as $item )
+        {
+         //calculate the new total for the cart
+         $SubTotal=$item['price'] * $item['pivot']['quantity'];
+         $vat = Store::where('id',$item['store_id'])->pluck('vat_percent')->first();
+         if(!$item['vat_included'])
+         $SubTotal+= ($SubTotal*($vat/100));
 
+         $newTotal += $SubTotal;
+        }
+        $cart->update(['total'=>$newTotal]);  
+        DB::commit(); 
+    } catch (Exception $e) {
+        DB::rollback();
+        return $e;
+        // something went wrong
+    }
         return true;
 
     }

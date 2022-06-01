@@ -29,6 +29,13 @@ class StoresController extends Controller
         return compact('store');
     }
 
+    //show store products
+    public function showProducts(Store $store){
+        $this->authorize('view', $store);
+        $products = $store->products()->get();
+        // dd($products);
+        return compact('products');
+    }
     //add store to current user
     public function store(){
 
