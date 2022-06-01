@@ -41,6 +41,8 @@ class CartPolicy
      */
     public function create(User $user)
     {
+        return $user->type == "Consumer" ;
+
         //
     }
 
@@ -53,6 +55,8 @@ class CartPolicy
      */
     public function update(User $user, Cart $cart)
     {
+        return $user->id == $cart->user_id;
+
         //
     }
 

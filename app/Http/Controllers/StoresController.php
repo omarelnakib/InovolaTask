@@ -34,7 +34,6 @@ class StoresController extends Controller
 
         $data = request()->validate([
             'name' => 'required',
-            'shipping_cost'=>'',
             'vat_percent'=>''
         ]);
 
@@ -50,7 +49,6 @@ class StoresController extends Controller
 
         $data = request()->validate([
             'name' => 'required',
-            'shipping_cost'=>'',
             'vat_percent'=>''
         ]);
 

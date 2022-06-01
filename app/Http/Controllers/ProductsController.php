@@ -33,7 +33,6 @@ class ProductsController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'description'=>'required',
-            'available_quantity'=>'required',
             'price'=>'required',
             'vat_included'=>'',
             'store_id'=>'required'
@@ -46,14 +45,13 @@ class ProductsController extends Controller
 
     }
 
-    //update store data
+    //update product data
     public function update(Product $product){
         $this->authorize('update', $product);
 
         $data = request()->validate([
             'name' => 'required',
             'description'=>'required',
-            'available_quantity'=>'required',
             'price'=>'required',
             'vat_included'=>'',
         ]);

@@ -29,13 +29,14 @@ class HTTPTest extends TestCase
     public function testStore()
     {
        
-        // $user = new User([
-        //     'id' => 1,
-        //     'name' => 'yish'
-        // ]);
-        // $this->be($user);
-        // $response = $this->post('/store',['name' =>'pets2',
-        // 'vat_percent' => '25']);
-        // $response->assertStatus(200);
+        $user = new User([
+            'id' => 2,
+            'name' => 'yish',
+            'type' => 'Consumer'
+        ]);
+        $this->be($user);
+        $response = $this->post('/cart',['product_id' =>'2',
+        'quantity' => '25']);
+        $response->assertStatus(200);
     }
 }

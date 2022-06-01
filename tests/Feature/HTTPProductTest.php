@@ -18,36 +18,22 @@ class HTTPProductTest extends TestCase
     public function test_example()
     {
           
-        $user = new User([
-            'id' => 1,
-            'name' => 'yish',
-            'type' => 'Merchant'
-        ]);
-        $this->be($user);
-        $response = $this->patch('/product/2',['name' =>json_encode([
-            "ar"=> "ميرا",
-            "en"=> "Mera",
-               ]),'description' =>json_encode([
-                "ar"=> "ميرا دراي فوود",
-                "en"=> "Mera",
-               ]),
-        'available_quantity' => '20', 'vat_included'=>false, 'price'=>'42']);
-        $response->assertStatus(200);
-        //         $user = new User([
+        // $user = new User([
         //     'id' => 1,
         //     'name' => 'yish',
         //     'type' => 'Merchant'
         // ]);
         // $this->be($user);
-        // $response = $this->post('/product',['name' =>json_encode([
-        //     "ar"=> "ريتا",
-        //     "en"=> "Rita",
+        // $response = $this->patch('/product/2',['name' =>json_encode([
+        //     "ar"=> "ميرا",
+        //     "en"=> "Mera",
         //        ]),'description' =>json_encode([
-        //         "ar"=> "ريتا",
-        //         "en"=> "Rita",
+        //         "ar"=> "ميرا دراي فوود",
+        //         "en"=> "Mera",
         //        ]),
-        // 'available_quantity' => '25', 'vat_included'=>true, 'price'=>'42','store_id'=>'2']);
+        //  'vat_included'=>false, 'price'=>'42']);
         // $response->assertStatus(200);
+     
     }
 
     public function updateTest(){
