@@ -1,29 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Services\ProductService;
+use DB; 
 use App\Models\Product;
-use App\Models\Store;
 
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    protected $product_service ;
     public function __construct()
-    {
-        // $this->middleware('auth');
+    {   
+        $this->product_service = new ProductService();
     }
     //retrieve all products
     public function index(){
 
-
-            $products = Product::all();
+            $products = $this->product_service->all();
             return compact('products');
      
     }
 
     //show certain product
     public function show(Product $product){
-
+        $product = $this->product_service->getProduct($product);
         return compact('product');
     }
 
@@ -39,7 +41,7 @@ class ProductsController extends Controller
         ]);
         $this->authorize('create',[Product::class,$data['store_id']]);
 
-        auth()->user()->store()->find($data['store_id'])->products()->create($data);
+        $this->product_service->addProductToStore($data['store_id'], $data);
 
         return true;
 
@@ -55,8 +57,8 @@ class ProductsController extends Controller
             'price'=>'required',
             'vat_included'=>'',
         ]);
-
-        $product->update($data);
+        
+        $this->product_service->updateStoreProduct($product, $data);
 
         return true;
 

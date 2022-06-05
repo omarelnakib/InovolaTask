@@ -22,7 +22,7 @@ class HTTPTest extends TestCase
             'name' => 'ahmed'
         ]);
         $this->be($user);
-        $response = $this->post('/store',['name' =>'Hyper1',
+        $response = $this->post('/store',['name' =>'Hyper2',
         'vat_percent' => '10']);
         $response->assertStatus(200);
     }
@@ -35,7 +35,7 @@ class HTTPTest extends TestCase
             'type' => 'Merchant'
         ]);
         $this->be($user);
-        $response = $this->patch('/store/7',['name'=>'hyper']);
+        $response = $this->patch('/store/7',['name'=>'hyper1']);
         $response->assertStatus(200);
     }
 
@@ -49,9 +49,9 @@ class HTTPTest extends TestCase
         ]);
         $this->be($user);
 
-        $response = $this->post('/product',['name' =>json_encode(["ar"=> "مياه نسلة",  "en"=> "nestle water",])
-        ,'description' =>json_encode(["ar"=> "ميرا دراي فوود", "en"=> "Mera" ]),
-        'price' => 5, 'vat_included'=>false, 'store_id' =>7]);
+        $response = $this->post('/product',['name' =>json_encode(["ar"=> "شيبسي",  "en"=> "chipsy",])
+        ,'description' =>json_encode(["ar"=> "رقائق البطاطاس", "en"=> "potato chips" ]),
+        'price' => 3.5, 'vat_included'=>true, 'store_id' =>7]);
         $response->assertStatus(200);
     }
 
@@ -66,7 +66,7 @@ class HTTPTest extends TestCase
 
         $response = $this->patch('/product/5',['name' =>json_encode(["ar"=> "مياه نسلة",  "en"=> "nestle water",])
         ,'description' =>json_encode(["ar"=> "مياه معدنية نقية", "en"=> "clear water" ]),
-        'price' => 3, 'vat_included'=>true]);
+        'price' => 2, 'vat_included'=>true]);
         $response->assertStatus(200);
     }
 
@@ -78,7 +78,7 @@ class HTTPTest extends TestCase
         ]);
         $this->be($user);
 
-        $response = $this->post('/cart',['product_id' => 5, 'quantity'=>5]);
+        $response = $this->post('/cart',['product_id' => 3, 'quantity'=>9]);
         $response->assertStatus(200);
     }
 
@@ -90,7 +90,7 @@ class HTTPTest extends TestCase
         ]);
         $this->be($user);
 
-        $response = $this->patch('/cart/4/2',['quantity'=>3]);
+        $response = $this->patch('/cart/4/3',['quantity'=>2]);
         $response->assertStatus(200);
     }
 }
